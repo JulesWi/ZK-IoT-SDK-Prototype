@@ -1,8 +1,8 @@
 # ZK-IoT SDK - Noir Developer Tooling
 
-Une suite d'outils open-source pour faciliter le développement de circuits Noir pour l'IoT.
+An open-source suite of tools to facilitate the development of Noir circuits for IoT.
 
-## 🚀 Installation Rapide
+## 🚀 Quick Installation
 
 ```bash
 npm install @zk-iot/noir-sdk
@@ -11,23 +11,23 @@ nargo add zk_iot_circuits
 
 ## 📚 Documentation
 
-- [Documentation complète](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/blob/main/README.md)
-- [Exemples d'utilisation](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/tree/main/examples)
-- [Guides de démarrage](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/blob/main/docs/getting-started.md)
+- [Complete Documentation](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/blob/main/README.md)
+- [Usage Examples](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/tree/main/examples)
+- [Getting Started Guides](https://github.com/JulesWi/ZK-IoT-SDK-Prototype/blob/main/docs/getting-started.md)
 
-## 🛠️ Outils Principaux
+## 🛠️ Main Tools
 
-- **Circuit Templates**: Circuits pré-construits pour capteurs IoT communs
-- **Circuit Inspector**: Visualiseur interactif des contraintes et profiler de performance
-- **Test Framework**: Suite de tests automatisés pour circuits IoT
-- **Benchmarking Suite**: Métriques de performance automatiques
-- **CLI Tools**: Outils en ligne de commande pour le développement
-- **Documentation++**: Guides interactifs et exemples prêts à utiliser
+- **Circuit Templates**: Pre-built circuits for common IoT sensors
+- **Circuit Inspector**: Interactive constraint visualizer and performance profiler
+- **Test Framework**: Automated test suite for IoT circuits
+- **Benchmarking Suite**: Automatic performance metrics
+- **CLI Tools**: Command-line tools for development
+- **Documentation++**: Interactive guides and ready-to-use examples
 
 ## 🎯 Mission
 
-Simplifier la création de circuits Noir pour l'IoT avec des outils qui rendent le développement ZK plus rapide, plus fiable et plus accessible aux développeurs.
+Simplify the creation of Noir circuits for IoT with tools that make ZK development faster, more reliable, and more accessible to developers.
 
-## 📝 Licence
+## 📝 License
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+This project is licensed under MIT. See the [LICENSE](LICENSE) file for details.

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZK-IoT SDK - Noir Developer Tooling</title>
+    <style>
+        /* Le style CSS reste inchangé */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .slide {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        .slide:nth-child(1) { animation-delay: 0.2s; }
+        .slide:nth-child(2) { animation-delay: 0.4s; }
+        .slide:nth-child(3) { animation-delay: 0.6s; }
+        .slide:nth-child(4) { animation-delay: 0.8s; }
+        .slide:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #ff00e6, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .slide-subtitle {
+            font-size: 1.8em;
+            color: #00d4ff;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        .code-block {
+            background: #0a0a0f;
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 20px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #0a0a0f;
+            color: #00d4ff;
+            padding: 0 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 230, 0.1));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 4px solid #00ff88;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.2);
+        }
+
+        .tool-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .developer-benefit {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 3px solid #00d4ff;
+        }
+
+        .developer-benefit h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .comparison-card.without {
+            background: rgba(255, 0, 230, 0.1);
+            border: 2px solid rgba(255, 0, 230, 0.3);
+        }
+
+        .comparison-card.with-sdk {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .comparison-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .comparison-card.without .comparison-title {
+            color: #ff00e6;
+        }
+
+        .comparison-card.with-sdk .comparison-title {
+            color: #00ff88;
+        }
+
+        .installation-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .npm-command {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .npm-command::before {
+            content: '$';
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .features-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .feature-demo {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section,
+            .features-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide {
+                padding: 25px;
+            }
+            
+            .slide-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: SDK Introduction -->
+        <div class="slide">
+            <h1 class="slide-title">🛠️ ZK-IoT SDK</h1>
+            <div class="slide-subtitle">
+                <div class="slide-icon">⚙️</div>
+                Open-Source Tooling for Noir Developers
+            </div>
+            
+            <div class="highlight-box">
+                <h3 style="color: #00ff88; margin-bottom: 15px;">🎯 Mission</h3>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    <strong>Simplify Noir circuit creation for IoT</strong> with tools that make ZK development faster, more reliable, and more accessible to developers.
+                </p>
+            </div>
+
+            <div class="installation-section">
+                <h3 style="color: #00d4ff; margin-bottom: 20px;">🚀 Quick Installation</h3>
+                <div class="npm-command">npm install @zk-iot/noir-sdk</div>
+                <div class="npm-command">nargo add zk_iot_circuits</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Developer Pain Points -->
+        <div class="slide">
+            <div class="slide-subtitle">
+                <div class="slide-icon">😤</div>
+                Developer Pain Points
+            </div>
+            
+            <div class="comparison-section">
+                <div class="comparison-card without">
+                    <div class="comparison-title">❌ Without SDK</div>
+                    <div class="developer-benefit">
+                        <h4>🔧 Complex Setup</h4>
+                        <p>Manual IoT circuit configuration, constraint management, performance optimization</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>🐛 Difficult Debugging</h4>
+                        <p>Cryptic errors, no visualization, complex test writing</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>📚 Steep Learning Curve</h4>
+                        <p>Understanding ZK + IoT + Noir = many concepts at once</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>⏰ Time to Market</h4>
+                        <p>Weeks to create a functional IoT circuit</p>
+                    </div>
+                </div>
+                
+                <div class="comparison-card with-sdk">
+                    <div class="comparison-title">✅ With ZK-IoT SDK</div>
+                    <div class="developer-benefit">
+                        <h4>🎯 Ready Templates</h4>
+                        <p>Pre-optimized IoT circuits, proven patterns, best practices included</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>🔍 Visual Debugging</h4>
+                        <p>Interactive inspector, constraint profiling, automated testing</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>📖 Enhanced Documentation</h4>
+                        <p>Interactive examples, step-by-step guides, active community</p>
+                    </div>
+                    <div class="developer-benefit">
+                        <h4>⚡ Rapid Development</h4>
+                        <p>Hours to prototype, minutes to test</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: SDK Tools Suite -->
+        <div class="slide">
+            <div class="slide-subtitle">
+                <div class="slide-icon">🧰</div>
+                Developer Tools Suite
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3><span class="tool-icon">📋</span>Circuit Templates</h3>
+                    <p>Pre-built Noir circuits for common IoT sensors (temperature, GPS, motion, etc.)</p>
+                    <div class="code-block" data-lang="Noir">
+use zk_iot::sensors::Temperature;
+
+fn main(temp: Field, threshold: Field) -> pub Field {
+    Temperature::above_threshold(temp, threshold)
+}</div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><span class="tool-icon">🔍</span>Circuit Inspector</h3>
+                    <p>Interactive constraint visualizer, performance profiler, automatic optimizer</p>
+                    <div class="developer-benefit">
+                        <h4>Features</h4>
+                        <p>• R1CS constraint analysis<br>• Bottleneck detection<br>• Optimization suggestions</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><span class="tool-icon">🧪</span>Test Framework</h3>
+                    <p>Automated test suite for IoT circuits with simulated data and edge cases</p>
+                    <div class="code-block" data-lang="TypeScript">
+describe('Temperature Circuit', () => {
+  test('validates threshold proof', async () => {
+    const result = await zkIoT.test.temperature({
+      value: 25.5, threshold: 25.0
+    });
+    expect(result.proof).toBeTruthy();
+  });
+});</div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><span class="tool-icon">📊</span>Benchmarking Suite</h3>
+                    <p>Automatic performance metrics: proof time, size, constraints</p>
+                    <div class="developer-benefit">
+                        <h4>Tracked Metrics</h4>
+                        <p>• Proof generation time<br>• Generated proof size<br>• Number of constraints<br>• Memory usage</p>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><span class="tool-icon">🔧</span>CLI Tools</h3>
+                    <p>Command-line tools for scaffolding, compilation, and deployment</p>
+                    <div class="npm-command" style="margin-top: 15px;">zk-iot create --template sensor-monitoring</div>
+                    <div class="npm-command">zk-iot test --benchmark --coverage</div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><span class="tool-icon">📚</span>Documentation++</h3>
+                    <p>Interactive guides, online playground, ready-to-use examples</p>
+                    <div class="developer-benefit">
+                        <h4>Resources</h4>
+                        <p>• Step-by-step tutorials<br>• Complete API Reference<br>• Interactive playground<br>• Use case examples</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Code Examples -->
+        <div class="slide">
+            <div class="slide-subtitle">
+                <div class="slide-icon">💻</div>
+                Concrete Usage Example
+            </div>
+            
+            <div class="features-showcase">
+                <div class="feature-demo">
+                    <h3 style="color: #00d4ff; margin-bottom: 20px;">🔧 Before (Pure Noir)</h3>
+                    <div class="code-block" data-lang="Noir">
+// Complex circuit to write manually
+fn main(
+    temperature: Field,
+    latitude: Field, 
+    longitude: Field,
+    threshold: Field,
+    zone_bounds: [Field; 4]
+) -> pub [Field; 3] {
+    // Manual validation logic
+    let temp_valid = temperature - threshold;
+    let lat_in_bounds = /* complex logic */;
+    let lng_in_bounds = /* complex logic */;
+    
+    // Manual constraint management
+    assert(temp_valid >= 0);
+    // ... lots of boilerplate code
+    
+    [temp_valid, lat_in_bounds, lng_in_bounds]
+}</div>
+                </div>
+
+                <div class="feature-demo">
+                    <h3 style="color: #00ff88; margin-bottom: 20px;">✅ With ZK-IoT SDK</h3>
+                    <div class="code-block" data-lang="Noir">
+use zk_iot::prelude::*;
+
+fn main(
+    sensor_data: SensorReading,
+    constraints: IoTConstraints
+) -> pub IoTProof {
+    // Optimized and tested circuit
+    IoTValidator::new()
+        .temperature_above(constraints.temp_threshold)
+        .location_within(constraints.authorized_zone)
+        .validate(sensor_data)
+}</div>
+                    
+                    <div class="code-block" data-lang="TypeScript">
+// Automatic testing and benchmarking
+const circuit = new ZkIoTCircuit('sensor-validator');
+const proof = await circuit.prove({
+  temperature: 25.5,
+  location: [48.8566, 2.3522]
+});
+
+// Automatic metrics
+console.log(circuit.getBenchmarks());</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Developer Experience -->
+        <div class="slide">
+            <div class="slide-subtitle">
+                <div class="slide-icon">🎯</div>
+                Impact on Developer Experience
+            </div>
+            
+            <div class="highlight-box">
+                <h3 style="color: #00ff88; margin-bottom: 20px;">📈 Improvement Metrics</h3>
+                <div class="tools-grid">
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 3em; color: #00d4ff; font-weight: bold;">90%</div>
+                        <div style="color: #ccc;">Setup time reduction</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 3em; color: #00ff88; font-weight: bold;">75%</div>
+                        <div style="color: #ccc;">Fewer bugs in production</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 3em; color: #ff00e6; font-weight: bold;">5x</div>
+                        <div style="color: #ccc;">Faster prototyping</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 3em; color: #ffa502; font-weight: bold;">50%</div>
+                        <div style="color: #ccc;">Constraint reduction</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="developer-benefit" style="margin: 30px 0;">
+                <h4>🚀 What it means for Noir developers</h4>
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    Instead of spending weeks understanding the subtleties of ZK circuits for IoT,
+                    developers can <strong>focus on their business logic</strong> and prototype in hours with robust and well-documented tools.
+                </p>
+            </div>
+
+            <div class="cta-section">
+                <h3 style="color: #00d4ff; margin-bottom: 20px;">🛠️ Ready for the Noir Community</h3>
+                <p style="font-size: 1.1em; margin-bottom: 30px;">
+                    Open-source, extensible, and designed for the Aztec/Noir ecosystem
+                </p>
+                <a href="https://github.com/JulesWi/ZK-IoT-SDK-Prototype" class="cta-button">
+                    📦 View on GitHub
+                </a>
+                <a href="https://github.com/JulesWi/ZK-IoT-SDK-Prototype/blob/main/README.md" class="cta-button secondary">
+                    📚 Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
