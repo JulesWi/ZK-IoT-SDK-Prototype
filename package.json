@@ -1,0 +1,13 @@
+{
+  "name": "zk-iot-sdk-presentation",
+  "version": "1.0.0",
+  "description": "Presentation for ZK-IoT SDK - Noir Developer Tooling",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo \"No build needed - static HTML\"",
+    "build": "echo \"No build needed - static HTML\""
+  },
+  "keywords": ["noir", "zk-iot", "presentation"],
+  "author": "Jules Wi",
+  "license": "MIT"
+}
