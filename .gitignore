@@ -5,6 +5,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.example
 
 # Logs
 logs
@@ -26,3 +27,11 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.cer
+*.crt
+*.p12

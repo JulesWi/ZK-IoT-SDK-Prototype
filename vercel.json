@@ -12,5 +12,9 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "VERCEL_PROJECT_ID": "prj_5eKxmj1d9GQnpZz1NKGbzgtucpqM"
+  }
 }
