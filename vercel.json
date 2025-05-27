@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "projectId": "prj_5eKxmj1d9GQnpZz1NKGbzgtucpqM",
   "builds": [
     {
       "src": "index.html",
@@ -14,7 +13,6 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "VERCEL_PROJECT_ID": "prj_5eKxmj1d9GQnpZz1NKGbzgtucpqM"
+    "NODE_ENV": "production"
   }
 }
