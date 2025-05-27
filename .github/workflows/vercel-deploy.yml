@@ -18,7 +18,3 @@ jobs:
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: prj_5eKxmj1d9GQnpZz1NKGbzgtucpqM
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-repository: JulesWi/present-sdk-prototype
