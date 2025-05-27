@@ -4,7 +4,7 @@
   "description": "Presentation for ZK-IoT SDK - Noir Developer Tooling",
   "scripts": {
     "dev": "echo \"No build needed - static HTML\"",
-    "build": "echo \"No build needed - static HTML\"",
+    "build": "mkdir -p dist && cp index.html dist/ && cp -r assets dist/",
     "start": "echo \"No start needed - static HTML\""
   },
   "keywords": ["noir", "zk-iot", "presentation"],
